@@ -3,5 +3,5 @@ target_sources(
     ${PROJECT_NAME}
     PRIVATE
         main.cpp
-        shapes.c
+        shapes.cpp
 )

@@ -2,6 +2,8 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 
+#include "shapes.h"
+
 /* We will use this renderer to draw into this window every frame. */
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
@@ -24,6 +26,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         SDL_Log("Não foi possível criar janela/renderizador %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
+
     SDL_SetRenderLogicalPresentation(renderer, 640, 480, SDL_LOGICAL_PRESENTATION_LETTERBOX);
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
@@ -58,6 +61,9 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 
     /* clear the window to the draw color. */
     SDL_RenderClear(renderer);
+
+    SDL_SetRenderDrawColorFloat(renderer, 0.0, 0.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT);
+    COL_RenderCircle(renderer, 10.0, 200.0, 200.0);
 
     /* put the newly-cleared rendering on the screen. */
     SDL_RenderPresent(renderer);
