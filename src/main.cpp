@@ -1,7 +1,12 @@
+/* SDL*/
 #define SDL_MAIN_USE_CALLBACKS 1  /* use the callbacks instead of main() */
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 
+/* std */
+#include <cstdlib>
+
+/* include */
 #include "shapes.h"
 
 #define RADIUS 20.0
@@ -9,6 +14,12 @@
 /* We will use this renderer to draw into this window every frame. */
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
+
+
+static float** positions;
+static float*  radius;
+static float** velocities;
+static float** normals;
 
 /* Variables */
 const float background_color[] = {0.2, 0.2, 0.2};
@@ -30,7 +41,13 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
     }
 
     /* Read input file */
-    
+    int n = 3;
+
+    /* Allocate memory for balls */
+    positions =  (float**)malloc(n * sizeof(float[2]));
+    radius =     (float*) malloc(n * sizeof(float));
+    velocities = (float**)malloc(n * sizeof(float[2]));
+    normals =    (float**)malloc(n * sizeof(float[3]));
 
     SDL_SetRenderLogicalPresentation(renderer, 640, 480, SDL_LOGICAL_PRESENTATION_LETTERBOX);
     return SDL_APP_CONTINUE;  /* carry on with the program! */
@@ -88,5 +105,8 @@ SDL_AppResult SDL_AppIterate(void *appstate)
 /* This function runs once at shutdown. */
 void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
-    /* SDL will clean up the window/renderer for us. */
+    free(positions);
+    free(radius);
+    free(velocities);
+    free(normals);
 }
