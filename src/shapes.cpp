@@ -2,6 +2,12 @@
 
 #include <math.h>
 
+struct Ball {
+    float pos[2];
+    float radius;
+    float vel[2];
+    float normal_face[2];
+};
 
 void COL_RenderCircle(SDL_Renderer *renderer, float radius, float x, float y) {
     float start = x - radius;

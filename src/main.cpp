@@ -4,12 +4,14 @@
 
 #include "shapes.h"
 
+#define RADIUS 20.0
+
 /* We will use this renderer to draw into this window every frame. */
 static SDL_Window *window = NULL;
 static SDL_Renderer *renderer = NULL;
 
 /* Variables */
-const float background_color[] = {0.5, 0.5, 0.5};
+const float background_color[] = {0.2, 0.2, 0.2};
 int directional_input[2] = {0, 0}; /* (x, y) */
 
 /* This function runs once at startup. */
@@ -27,6 +29,9 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[])
         return SDL_APP_FAILURE;
     }
 
+    /* Read input file */
+    
+
     SDL_SetRenderLogicalPresentation(renderer, 640, 480, SDL_LOGICAL_PRESENTATION_LETTERBOX);
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
@@ -41,6 +46,12 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
     if (event->type == SDL_EVENT_KEY_DOWN) {
         if (event->key.key == SDLK_ESCAPE) {
             return SDL_APP_SUCCESS;
+        }
+    }
+
+    if (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+        if (event->button.button == SDL_BUTTON_RIGHT) {
+            
         }
     }
 
@@ -62,8 +73,11 @@ SDL_AppResult SDL_AppIterate(void *appstate)
     /* clear the window to the draw color. */
     SDL_RenderClear(renderer);
 
+    /* Ball processing fucntion */
+    
+
     SDL_SetRenderDrawColorFloat(renderer, 0.0, 0.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT);
-    COL_RenderCircle(renderer, 10.0, 200.0, 200.0);
+    COL_RenderCircle(renderer, 20.0, 200.0, 200.0);
 
     /* put the newly-cleared rendering on the screen. */
     SDL_RenderPresent(renderer);
