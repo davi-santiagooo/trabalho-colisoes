@@ -291,7 +291,7 @@
 		{
 			"backtrace" : 13,
 			"compileGroupIndex" : 1,
-			"path" : "src/test.cpp",
+			"path" : "src/sphere.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

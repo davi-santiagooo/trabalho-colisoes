@@ -5,7 +5,7 @@
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/gaaxh/Projects/colisoesGL/src/*.cpp")
 set(OLD_GLOB
   "/home/gaaxh/Projects/colisoesGL/src/main.cpp"
-  "/home/gaaxh/Projects/colisoesGL/src/test.cpp"
+  "/home/gaaxh/Projects/colisoesGL/src/sphere.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

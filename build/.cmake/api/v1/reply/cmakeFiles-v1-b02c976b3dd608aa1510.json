@@ -6,7 +6,7 @@
 			"paths" : 
 			[
 				"/home/gaaxh/Projects/colisoesGL/src/main.cpp",
-				"/home/gaaxh/Projects/colisoesGL/src/test.cpp"
+				"/home/gaaxh/Projects/colisoesGL/src/sphere.cpp"
 			],
 			"recurse" : true
 		}
