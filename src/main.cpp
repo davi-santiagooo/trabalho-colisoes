@@ -1,16 +1,19 @@
 /* std Libs */
 #include <cstdio>
+#include <glm/ext/vector_float3.hpp>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
 
 /* External Libs */
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
-#include <vector>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 /* Internal Includes */
-
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -64,7 +67,7 @@ int main() {
     GLint success;
 
     /* Vertex shader */
-    std::ifstream vertexFile("assets/vertex.glsl");
+    std::ifstream vertexFile("../assets/vertex.glsl");
     if(!vertexFile.is_open()) {
         std::cout << "Failed to open vertex shader file" << std::endl;
         return -1;
@@ -92,7 +95,7 @@ int main() {
     
     
     /* Fragment shader */
-    std::ifstream fragmentFile("assets/fragment.glsl");
+    std::ifstream fragmentFile("../assets/fragment.glsl");
     if(!fragmentFile.is_open()) {
         std::cout << "Failed to open fragment shader file" << std::endl;
         return -1;
@@ -137,6 +140,8 @@ int main() {
     glDeleteShader(fragmentShader);
     /* #endregion */
 
+    glm::vec3 cam_pos(0.0, 0.0, 0.0);
+    glm::vec3 cam_dir(0.0, 0.0, 1.0);
 
     std::vector<GLfloat> square = {
         -0.5, -0.5, 0.0,

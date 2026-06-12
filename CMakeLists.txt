@@ -17,6 +17,9 @@ find_package(OpenGL REQUIRED)
 target_include_directories(${target_name} PRIVATE  vendors/glad/include)
 target_sources(${target_name} PRIVATE vendors/glad/src/gl.c)
 
+# GLM
+find_package(glm CONFIG REQUIRED)
+
 target_include_directories(
     ${target_name}
     PRIVATE
@@ -30,4 +33,5 @@ target_sources(${target_name} PRIVATE ${SOURCES})
 target_link_libraries(${PROJECT_NAME}
     OpenGL::GL
     glfw
+    glm::glm
 )

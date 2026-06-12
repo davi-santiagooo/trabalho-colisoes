@@ -824,6 +824,9 @@ X11_xkbfile_LIB:FILEPATH=/usr/lib/libxkbfile.so
 //The directory containing a CMake configuration file for glfw3.
 glfw3_DIR:PATH=/usr/lib/cmake/glfw3
 
+//The directory containing a CMake configuration file for glm.
+glm_DIR:PATH=/usr/local/share/glm
+
 //Path to a library.
 pkgcfg_lib_PKG_FONTCONFIG_fontconfig:FILEPATH=/usr/lib/libfontconfig.so
 

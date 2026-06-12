@@ -17390,3 +17390,121 @@ events:
         - "/usr/pkg"
         - "/opt"
 ...
+
+---
+events:
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "CMakeLists.txt:21 (find_package)"
+    name: "glm"
+    configs:
+      -
+        filename: "glm.cps"
+        kind: "cps"
+      -
+        filename: "glmConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "glm-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "glm"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/home/gaaxh/Projects/colisoesGL/build/CMakeFiles/pkgRedirects/glmConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/Projects/colisoesGL/build/CMakeFiles/pkgRedirects/glm-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/Projects/colisoesGL/build/CMakeFiles/pkgRedirects/lib/cps/glm.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/Projects/colisoesGL/build/CMakeFiles/pkgRedirects/share/cps/glm.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.cargo/glmConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.cargo/glm-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.cargo/lib/cps/glm.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.cargo/share/cps/glm.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/glmConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/glm-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cps/glm.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/share/cps/glm.cps"
+        mode: "cps"
+        reason: "no_exist"
+    found:
+      path: "/usr/local/share/glm/glmConfig.cmake"
+      mode: "config"
+      version: "1.0.3"
+    search_context:
+      ENV{PATH}:
+        - "/home/gaaxh/.cargo/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/sbin"
+        - "/var/lib/flatpak/exports/bin"
+        - "/usr/lib/jvm/default/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+        - "/usr/lib/rustup/bin"
+        - "/home/gaaxh/.local/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+...
