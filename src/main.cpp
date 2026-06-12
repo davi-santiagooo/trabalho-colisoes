@@ -1,9 +1,7 @@
 /* std Libs */
 #include <cstdio>
-#include <ios>
 #include <iostream>
 #include <fstream>
-#include <iterator>
 #include <sstream>
 
 /* External Libs */
@@ -63,10 +61,10 @@ int main() {
 
 
     /* #region SHADER LOADING */
-    GLint status;
+    GLint success;
 
     /* Vertex shader */
-    std::ifstream vertexFile("../assets/vertex.glsl");
+    std::ifstream vertexFile("assets/vertex.glsl");
     if(!vertexFile.is_open()) {
         std::cout << "Failed to open vertex shader file" << std::endl;
         return -1;
@@ -83,8 +81,8 @@ int main() {
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
     
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
-    if(!status) {
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if(!success) {
         char log_buffer[512];
         glGetShaderInfoLog(vertexShader, 512, NULL, log_buffer);
         int i;
@@ -94,7 +92,7 @@ int main() {
     
     
     /* Fragment shader */
-    std::ifstream fragmentFile("../assets/fragment.glsl");
+    std::ifstream fragmentFile("assets/fragment.glsl");
     if(!fragmentFile.is_open()) {
         std::cout << "Failed to open fragment shader file" << std::endl;
         return -1;
@@ -111,23 +109,32 @@ int main() {
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
     glCompileShader(fragmentShader);
     
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
-    if(!status) {
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if(!success) {
         char log_buffer[512];
         glGetShaderInfoLog(fragmentShader, 512, NULL, log_buffer);
         int i;
         printf("SHADER::FRAGMENT::ERROR: ");
         for(i = 0; log_buffer[i] != '\0'; i++) printf("%c", log_buffer[i]);
     }
-
     
     /* Create shader program*/
     GLuint shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader);
     glAttachShader(shaderProgram, fragmentShader);
     glLinkProgram(shaderProgram);
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    if(!success) {
+        char log_buffer[512];
+        glGetProgramInfoLog(shaderProgram, 512, NULL, log_buffer);
+        int i;
+        printf("SHADER::PROGRAM::ERROR: ");
+        for(i = 0; log_buffer[i] != '\0'; i++) printf("%c", log_buffer[i]);
+    }
     glUseProgram(shaderProgram);
 
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
     /* #endregion */
 
 
@@ -143,9 +150,9 @@ int main() {
     };
 
     /* VAOs */
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+    GLuint square_vao;
+    glGenVertexArrays(1, &square_vao);
+    glBindVertexArray(square_vao);
     
     /* VBOs */
     GLuint vertex_vbo;
@@ -179,7 +186,7 @@ int main() {
         glUniform3f(uni_objColor, 1.0, 0.0, 0.0);
 
         glUseProgram(shaderProgram);
-        glBindVertexArray(vao);
+        glBindVertexArray(square_vao);
         glDrawElements(GL_TRIANGLES, square_index.size(), GL_UNSIGNED_INT, (void*)0);
 
         /* End */
