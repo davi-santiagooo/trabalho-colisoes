@@ -1,81 +1,71 @@
 #include "sphere.hpp"
 
 #include <cmath>
+#include <cstdio>
+#include <iostream>
 #include <vector>
 
-void col_CreateUvSphere(int sectors, int layers, float radius, std::vector<float>& points, std::vector<int>& indices) {
-    float x, y, z = 0;
-    int i = 0;
+void col_CreateUvSphere(int sectors, int layers, float radius, std::vector<float>& points, std::vector<int>& indices, std::vector<float>& normals) {
+    float x, y, z;
+    float r, angle;
 
-    /* {points} vector */
-    // First point on top
-    points.push_back(0);
-    points.push_back(radius);
-    points.push_back(0);
-    i++;
+    points.reserve((layers - 2)*sectors + 2);
+    indices.reserve(6*sectors*(layers - 1));
+
+    /* Points & Normals*/
+    points.push_back(0.0f); points.push_back(-radius); points.push_back(0.0f);
+    normals.push_back(0.0f); normals.push_back(-1); normals.push_back(0.0f);
     
-    // Points in middle
-    int layer, sector;
-    float layerRadius;
-    for(layer = 1; layer < layers - 1; layer++) {
-        y = radius - layer * 2*radius/(layers - 1);
-        layerRadius = std::sqrt(radius*radius - y*y);
-
-        // Append all points of the layer to {points} vector
-        for(sector = 0; sector < sectors; sector++) {
-            float angle = sector * 2*M_PI/sectors;
-
-            x = layerRadius * std::cos(angle); 
-            z = layerRadius * std::sin(angle);
+    int lay, sec;
+    for(lay = 1; lay < layers; lay++) {
+        y = radius * std::sin(lay * M_PI / layers + 3*M_PI/2);
+        r = sqrt(radius*radius - y*y);
+        
+        for(sec = 0; sec < sectors; sec++) {
+            angle = sec*(2*M_PI/sectors);
+            x = r*cos((double)angle);
+            z = r*sin((double)angle);
             
             points.push_back(x);
             points.push_back(y);
             points.push_back(z);
-            i++;
+
+            normals.push_back(x/radius);
+            normals.push_back(y/radius);
+            normals.push_back(z/radius);
         }
     }
 
-    // Last point on bottom
-    points.push_back(0);
-    points.push_back(-radius);
-    points.push_back(0);
+    points.push_back(0.0f); points.push_back(radius); points.push_back(0.0f);
+    normals.push_back(0.0f); normals.push_back(1); normals.push_back(0.0f);
 
-    
-    /* {incices} vector */
-
-    // Top triangles
-    for(i = 1; i <= sectors; i++) {
+    /* Indices */
+    for(sec = 0; sec < sectors; sec++) {
         indices.push_back(0);
-        indices.push_back(i);
-        indices.push_back(i%sectors + 1);
+        indices.push_back(sec+1);
+        indices.push_back((sec+1)%sectors + 1);
     }
 
-    // Middle triangles
-    int l1, l2;
-    sector = 1;
-    l1 = 1;
-    l2 = sectors + 1;
-    for(layer = 1; layer < layers - 1; layer++) {
-        for(sector = 1; sector < sectors; sector++) {
-            indices.push_back(l1 + sector);
-            indices.push_back(l1 + (sector + 1)%sectors + 1);
-            indices.push_back(l2 + sector);
-
-            indices.push_back(l1 + sector);
-            indices.push_back(l2 + sector);
-            indices.push_back(l2 + sector + 1);
+    int p1, p2, p3, p4;
+    for(lay = 1; lay < layers - 1; lay++) {
+        for(sec = 0; sec < sectors; sec++) {
+            p1 = (lay - 1)*sectors + sec + 1;
+            p2 = (p1+1)%sectors + (lay-1)*sectors;
+            p3 = p1 + sectors;
+            p4 = p2 + sectors;
+            indices.push_back(p1);
+            indices.push_back(p2);
+            indices.push_back(p4);
+            indices.push_back(p1);
+            indices.push_back(p3);
+            indices.push_back(p4);
         }
-
-        l1 += sectors;
-        l2 += sectors;
     }
 
-    // Bottom triangles
-    int last_pi = points.size()/3 - 1;
-    int last_layer = (layers - 3) * sectors + 1;
-    for(i = 0; i < sectors; i++) {
-        indices.push_back(last_pi);
-        indices.push_back(last_layer + i);
-        indices.push_back(last_layer + (i+1)%sectors);
+    int last_i = points.size()/3-1;
+    for(sec = 0; sec < sectors; sec++) {
+        indices.push_back(last_i);
+        indices.push_back(last_i-1 - sec);
+        indices.push_back(last_i-1 - (sec + 1)%sectors);
     }
 }

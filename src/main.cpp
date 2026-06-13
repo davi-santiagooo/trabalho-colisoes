@@ -1,10 +1,8 @@
 /* std Libs */
-#include <cstdio>
-#include <glm/ext/vector_float3.hpp>
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 #include <sstream>
-#include <vector>
 
 /* External Libs */
 #include <glad/gl.h>
@@ -12,8 +10,12 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <vector>
 
 /* Internal Includes */
+#include "sphere.hpp"
+
+namespace fs = std::filesystem;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -27,7 +29,7 @@ void processInput(GLFWwindow *window)
 }
 
 
-int main() {
+int main(int argc, char* argv[]) {
     int height = 200;
     int width = 200;
 
@@ -65,9 +67,11 @@ int main() {
 
     /* #region SHADER LOADING */
     GLint success;
+    fs::path exePath = fs::weakly_canonical(fs::path(argv[0])).parent_path().parent_path();
 
     /* Vertex shader */
-    std::ifstream vertexFile("../assets/vertex.glsl");
+    fs::path vertexPath = exePath / "assets" / "vertex.glsl";
+    std::ifstream vertexFile(vertexPath.c_str());
     if(!vertexFile.is_open()) {
         std::cout << "Failed to open vertex shader file" << std::endl;
         return -1;
@@ -95,7 +99,8 @@ int main() {
     
     
     /* Fragment shader */
-    std::ifstream fragmentFile("../assets/fragment.glsl");
+    fs::path fragmentPath = exePath / "assets" / "fragment.glsl";
+    std::ifstream fragmentFile(fragmentPath.c_str());
     if(!fragmentFile.is_open()) {
         std::cout << "Failed to open fragment shader file" << std::endl;
         return -1;
@@ -140,36 +145,39 @@ int main() {
     glDeleteShader(fragmentShader);
     /* #endregion */
 
+
     glm::vec3 cam_pos(0.0, 0.0, 0.0);
     glm::vec3 cam_dir(0.0, 0.0, 1.0);
 
-    std::vector<GLfloat> square = {
-        -0.5, -0.5, 0.0,
-        -0.5, 0.5,  0.0,
-        0.5,  0.5,  0.0,
-        0.5,  -0.5,0.0,
-    };
-    std::vector<GLuint> square_index = {
-        0, 1, 2,
-        0, 3, 2,
-    };
+    std::vector<float> sphere;
+    std::vector<int> spherei;
+    std::vector<float> sphere_normals;
+    col_CreateUvSphere(20, 20, 0.5, sphere, spherei, sphere_normals);
+
+    /* Matrices */
+    glm::mat4 model = glm::mat4(1.0);
+
+    glm::mat4 projection = glm::perspective(glm::radians(55.0f), (float)width/height, 0.1f, 100.0f);
+
+    glm::mat4 view = glm::mat4(1.0);
+    view = glm::translate(view, glm::vec3(0.0, 0.0, -3.0));
 
     /* VAOs */
-    GLuint square_vao;
-    glGenVertexArrays(1, &square_vao);
-    glBindVertexArray(square_vao);
+    GLuint sphere_vao;
+    glGenVertexArrays(1, &sphere_vao);
+    glBindVertexArray(sphere_vao);
     
     /* VBOs */
     GLuint vertex_vbo;
     glGenBuffers(1, &vertex_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_vbo);
-    glBufferData(GL_ARRAY_BUFFER, square.size() * sizeof(GLfloat), square.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sphere.size() * sizeof(GLfloat), sphere.data(), GL_STATIC_DRAW);
     
     /* EBOs */
     GLuint indices_vbo;
     glGenBuffers(1, &indices_vbo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_vbo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, square_index.size() * sizeof(GLuint), square_index.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, spherei.size() * sizeof(GLuint), spherei.data(), GL_STATIC_DRAW);
     
     /* Vertex Attributes */
     GLint positionAttrib = glGetAttribLocation(shaderProgram, "position");
@@ -177,22 +185,33 @@ int main() {
     glEnableVertexAttribArray(positionAttrib);
 
     /* Uniforms */
-    GLint uni_objColor = glGetUniformLocation(shaderProgram, "objColor");
+    GLuint uni_objColor = glGetUniformLocation(shaderProgram, "objColor");
+    GLuint uni_model = glGetUniformLocation(shaderProgram, "model");
+    GLuint uni_view = glGetUniformLocation(shaderProgram, "view");
+    GLuint uni_projection = glGetUniformLocation(shaderProgram, "projection");
+
+    glEnable(GL_DEPTH_TEST);
 
     /* Main application loop */
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  
     while(!glfwWindowShouldClose(window)) {
         /* Start */
         processInput(window);
+        model = glm::rotate(model, glm::radians(1.0f), glm::vec3(1.0, 0.0, 0.0));
+
 
         /* Draw */
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUniform3f(uni_objColor, 1.0, 0.0, 0.0);
+        
+        glUniformMatrix4fv(uni_model, 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(uni_view, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(uni_projection, 1, GL_FALSE, glm::value_ptr(projection));
 
         glUseProgram(shaderProgram);
-        glBindVertexArray(square_vao);
-        glDrawElements(GL_TRIANGLES, square_index.size(), GL_UNSIGNED_INT, (void*)0);
+        glBindVertexArray(sphere_vao);
+        glDrawElements(GL_TRIANGLES, spherei.size(), GL_UNSIGNED_INT, (void*)0);
 
         /* End */
         glfwSwapBuffers(window);
