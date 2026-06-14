@@ -1,8 +1,6 @@
 #include "sphere.hpp"
 
 #include <cmath>
-#include <cstdio>
-#include <iostream>
 #include <vector>
 
 void col_CreateUvSphere(int sectors, int layers, float radius, std::vector<float>& points, std::vector<int>& indices, std::vector<float>& normals) {
@@ -50,7 +48,7 @@ void col_CreateUvSphere(int sectors, int layers, float radius, std::vector<float
     for(lay = 1; lay < layers - 1; lay++) {
         for(sec = 0; sec < sectors; sec++) {
             p1 = (lay - 1)*sectors + sec + 1;
-            p2 = (p1+1)%sectors + (lay-1)*sectors;
+            p2 = (lay - 1)*sectors + (sec + 1)%sectors + 1;
             p3 = p1 + sectors;
             p4 = p2 + sectors;
             indices.push_back(p1);
@@ -69,3 +67,9 @@ void col_CreateUvSphere(int sectors, int layers, float radius, std::vector<float
         indices.push_back(last_i-1 - (sec + 1)%sectors);
     }
 }
+
+typedef struct ball {
+    float pos[3];
+    float vel[3];
+    float radius;
+} Ball;

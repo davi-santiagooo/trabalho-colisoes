@@ -1,8 +1,12 @@
 /* std Libs */
+#include <cmath>
+#include <glm/common.hpp>
+#include <glm/ext/matrix_float4x4.hpp>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
 #include <sstream>
+#include <vector>
 
 /* External Libs */
 #include <glad/gl.h>
@@ -10,12 +14,17 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include <vector>
 
 /* Internal Includes */
 #include "sphere.hpp"
 
+
 namespace fs = std::filesystem;
+
+
+const static float mouseSense = 0.05f;
+const static float camRadius = 5.0f;
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -25,7 +34,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 void processInput(GLFWwindow *window)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    glfwSetWindowShouldClose(window, true);
+        glfwSetWindowShouldClose(window, true);
 }
 
 
@@ -146,22 +155,22 @@ int main(int argc, char* argv[]) {
     /* #endregion */
 
 
-    glm::vec3 cam_pos(0.0, 0.0, 0.0);
-    glm::vec3 cam_dir(0.0, 0.0, 1.0);
-
+    glm::vec3 camPos(0.0, 0.0, camRadius);
+    glm::vec3 camTarget(0.0);
+    glm::vec3 up(0.0, 1.0, 0.0);
+    
     std::vector<float> sphere;
     std::vector<int> spherei;
     std::vector<float> sphere_normals;
     col_CreateUvSphere(20, 20, 0.5, sphere, spherei, sphere_normals);
-
+    
     /* Matrices */
     glm::mat4 model = glm::mat4(1.0);
-
     glm::mat4 projection = glm::perspective(glm::radians(55.0f), (float)width/height, 0.1f, 100.0f);
-
     glm::mat4 view = glm::mat4(1.0);
-    view = glm::translate(view, glm::vec3(0.0, 0.0, -3.0));
+    
 
+    /* #region BUFFERS */
     /* VAOs */
     GLuint sphere_vao;
     glGenVertexArrays(1, &sphere_vao);
@@ -171,33 +180,70 @@ int main(int argc, char* argv[]) {
     GLuint vertex_vbo;
     glGenBuffers(1, &vertex_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sphere.size() * sizeof(GLfloat), sphere.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sphere.size() * sizeof(float), sphere.data(), GL_STATIC_DRAW);
+    GLint positionAttrib = glGetAttribLocation(shaderProgram, "aPos");
+    glVertexAttribPointer(positionAttrib, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(positionAttrib);
+    
+    GLuint normals_vbo;
+    glGenBuffers(1, &normals_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, normals_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sphere_normals.size() * sizeof(float), sphere_normals.data(), GL_STATIC_DRAW);
+    GLint normalsAttrib = glGetAttribLocation(shaderProgram, "aNormal");
+    glVertexAttribPointer(normalsAttrib, 3, GL_FLOAT, GL_TRUE, 0, NULL);
+    glEnableVertexAttribArray(normalsAttrib);
     
     /* EBOs */
-    GLuint indices_vbo;
-    glGenBuffers(1, &indices_vbo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_vbo);
+    GLuint indices_ebo;
+    glGenBuffers(1, &indices_ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, spherei.size() * sizeof(GLuint), spherei.data(), GL_STATIC_DRAW);
+    /* #endregion */
     
-    /* Vertex Attributes */
-    GLint positionAttrib = glGetAttribLocation(shaderProgram, "position");
-    glVertexAttribPointer(positionAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(positionAttrib);
 
     /* Uniforms */
     GLuint uni_objColor = glGetUniformLocation(shaderProgram, "objColor");
+    GLuint uni_camPos = glGetUniformLocation(shaderProgram, "camPos");
     GLuint uni_model = glGetUniformLocation(shaderProgram, "model");
     GLuint uni_view = glGetUniformLocation(shaderProgram, "view");
     GLuint uni_projection = glGetUniformLocation(shaderProgram, "projection");
-
+    
     glEnable(GL_DEPTH_TEST);
-
+    
     /* Main application loop */
+    double xpos, ypos;
+    double xpos0, ypos0;
+    double dxpos, dypos;
+    glfwGetCursorPos(window, &xpos0, &ypos0);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);  
+    float camRadiusPrime = camRadius;
+    float camAngleh = M_PI / 2;
+    float camAnglev = 0.0f;
     while(!glfwWindowShouldClose(window)) {
+
         /* Start */
         processInput(window);
-        model = glm::rotate(model, glm::radians(1.0f), glm::vec3(1.0, 0.0, 0.0));
+        glfwGetCursorPos(window, &xpos, &ypos);
+        //model = glm::rotate(model, glm::radians(1.0f), glm::vec3(1.0, 1.0, 1.0));
+        dxpos = xpos - xpos0;
+        dypos = ypos - ypos0;
+        if(glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_2)) {
+            camAngleh += dxpos * mouseSense;
+            if(camAngleh > 2*M_PI)
+                camAngleh -= 2*M_PI;
+            else if(camAngleh < 0)
+                camAngleh += 2*M_PI;
+
+            camAnglev += dypos * mouseSense;
+            camAnglev = glm::clamp(camAnglev, (float)(-M_PI/2 + 0.1), (float)(M_PI/2 - 0.1));
+        }
+        camRadiusPrime = camRadius * std::cos(camAnglev);
+        camPos.x = std::cos(camAngleh) * camRadiusPrime;
+        camPos.z = std::sin(camAngleh) * camRadiusPrime;
+        camPos.y = std::sin(camAnglev) * camRadius;
+        
+        /* jProcessing */
+        view = glm::lookAt(camPos, camTarget, up);
 
 
         /* Draw */
@@ -208,12 +254,16 @@ int main(int argc, char* argv[]) {
         glUniformMatrix4fv(uni_model, 1, GL_FALSE, glm::value_ptr(model));
         glUniformMatrix4fv(uni_view, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(uni_projection, 1, GL_FALSE, glm::value_ptr(projection));
+        glUniform3f(uni_camPos, camPos.x, camPos.y, camPos.z);
 
         glUseProgram(shaderProgram);
         glBindVertexArray(sphere_vao);
         glDrawElements(GL_TRIANGLES, spherei.size(), GL_UNSIGNED_INT, (void*)0);
 
+
         /* End */
+        xpos0 = xpos;
+        ypos0 = ypos;
         glfwSwapBuffers(window);
         glfwPollEvents();    
     }

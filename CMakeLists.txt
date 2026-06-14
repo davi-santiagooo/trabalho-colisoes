@@ -7,18 +7,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED OFF)
 set(target_name ${PROJECT_NAME})
 add_executable(${target_name})
 
-# GLFW
-add_subdirectory(vendors/glfw-3.4)
-
-# OpenGL
+# Dependencies
+find_package(glfw3 3.4 REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
 # GLAD
 target_include_directories(${target_name} PRIVATE  vendors/glad/include)
 target_sources(${target_name} PRIVATE vendors/glad/src/gl.c)
-
-# GLM
-find_package(glm CONFIG REQUIRED)
 
 target_include_directories(
     ${target_name}

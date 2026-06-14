@@ -5,4 +5,6 @@
 
 void col_CreateUvSphere(int sectors, int layers, float radius, std::vector<float>& points, std::vector<int>& indices, std::vector<float>& normals);
 
+typedef struct ball Ball;
+
 #endif

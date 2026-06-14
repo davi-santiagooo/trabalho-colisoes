@@ -17508,3 +17508,294 @@ events:
         - "/usr/pkg"
         - "/opt"
 ...
+
+---
+events:
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "CMakeLists.txt:12 (find_package)"
+    name: "glfw"
+    configs:
+      -
+        filename: "glfw.cps"
+        kind: "cps"
+      -
+        filename: "glfwConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "glfw-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "glfw"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/home/gaaxh/Projects/colisoesGL/build/CMakeFiles/pkgRedirects/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/Projects/colisoesGL/build/CMakeFiles/pkgRedirects/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/Projects/colisoesGL/build/CMakeFiles/pkgRedirects/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/Projects/colisoesGL/build/CMakeFiles/pkgRedirects/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.cargo/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.cargo/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.cargo/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.cargo/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/local/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/glfw3/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/cmake/glfw3/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/lib/cmake/glfw3/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/lib/cmake/glfw3/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/var/lib/flatpak/exports/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/var/lib/flatpak/exports/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/var/lib/flatpak/exports/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/var/lib/flatpak/exports/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/jvm/default/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/jvm/default/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/jvm/default/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/jvm/default/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/site_perl/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/site_perl/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/site_perl/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/site_perl/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/vendor_perl/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/vendor_perl/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/vendor_perl/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/vendor_perl/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/core_perl/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/core_perl/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/core_perl/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/bin/core_perl/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/rustup/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/rustup/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/rustup/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/usr/lib/rustup/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.local/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.local/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.local/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/home/gaaxh/.local/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/opt/glfwConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/opt/glfw-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/opt/lib/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+      -
+        path: "/opt/share/cps/glfw.cps"
+        mode: "cps"
+        reason: "no_exist"
+    found: null
+    search_context:
+      ENV{PATH}:
+        - "/home/gaaxh/.cargo/bin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/sbin"
+        - "/var/lib/flatpak/exports/bin"
+        - "/usr/lib/jvm/default/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+        - "/usr/lib/rustup/bin"
+        - "/home/gaaxh/.local/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+...
