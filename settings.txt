@@ -1,0 +1,6 @@
+Bolas 30
+Pool 7.5
+VelocidadeMax 5.0
+CoeficienteRest 1.0
+DeltaTempoSeg 0.1
+SenseMouse 0.01

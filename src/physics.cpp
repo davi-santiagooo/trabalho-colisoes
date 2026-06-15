@@ -1,4 +1,4 @@
-#include "sphere.hpp"
+#include "physics.hpp"
 
 #include <cmath>
 #include <vector>
@@ -67,9 +67,3 @@ void col_CreateUvSphere(int sectors, int layers, float radius, std::vector<float
         indices.push_back(last_i-1 - (sec + 1)%sectors);
     }
 }
-
-typedef struct ball {
-    float pos[3];
-    float vel[3];
-    float radius;
-} Ball;
