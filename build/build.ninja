@@ -67,9 +67,9 @@ build CMakeFiles/ColisoesGL.dir/src/main.cpp.o: CXX_COMPILER__ColisoesGL_unscann
   OBJECT_FILE_DIR = CMakeFiles/ColisoesGL.dir/src
   TARGET_SUPPORT_DIR = CMakeFiles/ColisoesGL.dir
 
-build CMakeFiles/ColisoesGL.dir/src/sphere.cpp.o: CXX_COMPILER__ColisoesGL_unscanned_Debug /home/gaaxh/Projects/colisoesGL/src/sphere.cpp || cmake_object_order_depends_target_ColisoesGL
+build CMakeFiles/ColisoesGL.dir/src/physics.cpp.o: CXX_COMPILER__ColisoesGL_unscanned_Debug /home/gaaxh/Projects/colisoesGL/src/physics.cpp || cmake_object_order_depends_target_ColisoesGL
   CONFIG = Debug
-  DEP_FILE = CMakeFiles/ColisoesGL.dir/src/sphere.cpp.o.d
+  DEP_FILE = CMakeFiles/ColisoesGL.dir/src/physics.cpp.o.d
   FLAGS = -g -std=gnu++17
   INCLUDES = -I/home/gaaxh/Projects/colisoesGL/vendors/glad/include -I/home/gaaxh/Projects/colisoesGL/include/ColisoesGL -I/home/gaaxh/Projects/colisoesGL/assets
   OBJECT_DIR = CMakeFiles/ColisoesGL.dir
@@ -84,7 +84,7 @@ build CMakeFiles/ColisoesGL.dir/src/sphere.cpp.o: CXX_COMPILER__ColisoesGL_unsca
 #############################################
 # Link the executable ColisoesGL
 
-build ColisoesGL: CXX_EXECUTABLE_LINKER__ColisoesGL_Debug CMakeFiles/ColisoesGL.dir/vendors/glad/src/gl.c.o CMakeFiles/ColisoesGL.dir/src/main.cpp.o CMakeFiles/ColisoesGL.dir/src/sphere.cpp.o | /usr/lib/libglfw.so.3.4 /usr/local/lib/libglm.a /usr/lib/libGLX.so /usr/lib/libOpenGL.so
+build ColisoesGL: CXX_EXECUTABLE_LINKER__ColisoesGL_Debug CMakeFiles/ColisoesGL.dir/vendors/glad/src/gl.c.o CMakeFiles/ColisoesGL.dir/src/main.cpp.o CMakeFiles/ColisoesGL.dir/src/physics.cpp.o | /usr/lib/libglfw.so.3.4 /usr/local/lib/libglm.a /usr/lib/libGLX.so /usr/lib/libOpenGL.so
   CONFIG = Debug
   DEP_FILE = CMakeFiles/ColisoesGL.dir/link.d
   FLAGS = -g

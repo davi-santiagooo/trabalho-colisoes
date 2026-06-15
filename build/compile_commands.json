@@ -13,8 +13,8 @@
 },
 {
   "directory": "/home/gaaxh/Projects/colisoesGL/build",
-  "command": "/usr/bin/g++ -I/home/gaaxh/Projects/colisoesGL/vendors/glad/include -I/home/gaaxh/Projects/colisoesGL/include/ColisoesGL -I/home/gaaxh/Projects/colisoesGL/assets -g -std=gnu++17 -o CMakeFiles/ColisoesGL.dir/src/sphere.cpp.o -c /home/gaaxh/Projects/colisoesGL/src/sphere.cpp",
-  "file": "/home/gaaxh/Projects/colisoesGL/src/sphere.cpp",
-  "output": "/home/gaaxh/Projects/colisoesGL/build/CMakeFiles/ColisoesGL.dir/src/sphere.cpp.o"
+  "command": "/usr/bin/g++ -I/home/gaaxh/Projects/colisoesGL/vendors/glad/include -I/home/gaaxh/Projects/colisoesGL/include/ColisoesGL -I/home/gaaxh/Projects/colisoesGL/assets -g -std=gnu++17 -o CMakeFiles/ColisoesGL.dir/src/physics.cpp.o -c /home/gaaxh/Projects/colisoesGL/src/physics.cpp",
+  "file": "/home/gaaxh/Projects/colisoesGL/src/physics.cpp",
+  "output": "/home/gaaxh/Projects/colisoesGL/build/CMakeFiles/ColisoesGL.dir/src/physics.cpp.o"
 }
 ]

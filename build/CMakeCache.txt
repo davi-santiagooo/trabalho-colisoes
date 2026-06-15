@@ -408,6 +408,18 @@ Project_SOURCE_DIR:STATIC=/home/gaaxh/Projects/colisoesGL
 RT_LIBRARY:FILEPATH=/usr/lib/librt.a
 
 //Path to a program.
+Vulkan_GLSLANG_VALIDATOR_EXECUTABLE:FILEPATH=/usr/bin/glslangValidator
+
+//Path to a program.
+Vulkan_GLSLC_EXECUTABLE:FILEPATH=/usr/bin/glslc
+
+//Path to a file.
+Vulkan_INCLUDE_DIR:PATH=/usr/include
+
+//Path to a library.
+Vulkan_LIBRARY:FILEPATH=/usr/lib/libvulkan.so
+
+//Path to a program.
 WAYLAND_SCANNER_EXECUTABLE:FILEPATH=/usr/bin/wayland-scanner
 
 //Path to a file.
@@ -1052,6 +1064,8 @@ FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib/libOpenGL.so][/usr/lib/li
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v2.5.1()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+//Details about finding Vulkan
+FIND_PACKAGE_MESSAGE_DETAILS_Vulkan:INTERNAL=[/usr/lib/libvulkan.so][/usr/include][found components: glslc glslangValidator ][v1.4.350()]
 //Details about finding X11
 FIND_PACKAGE_MESSAGE_DETAILS_X11:INTERNAL=[/usr/include][/usr/lib/libX11.so][ ][v()]
 //ADVANCED property for variable: FREETYPE_INCLUDE_DIR_freetype2
@@ -1141,6 +1155,14 @@ PKG_FONTCONFIG_fontconfig_PREFIX:INTERNAL=
 PKG_FONTCONFIG_fontconfig_VERSION:INTERNAL=
 //ADVANCED property for variable: RT_LIBRARY
 RT_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_GLSLANG_VALIDATOR_EXECUTABLE
+Vulkan_GLSLANG_VALIDATOR_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_GLSLC_EXECUTABLE
+Vulkan_GLSLC_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_INCLUDE_DIR
+Vulkan_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Vulkan_LIBRARY
+Vulkan_LIBRARY-ADVANCED:INTERNAL=1
 Wayland_CFLAGS:INTERNAL=-I/usr/include
 Wayland_CFLAGS_I:INTERNAL=
 Wayland_CFLAGS_OTHER:INTERNAL=
